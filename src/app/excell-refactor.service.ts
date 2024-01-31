@@ -8,7 +8,6 @@ export class WorkerService {
 
     constructor() {
         this.worker = new Worker(new URL('./excell-refactor.worker', import.meta.url));
-        console.log(this.worker);
     }
 
     runTask(data: any): Promise<any> {
