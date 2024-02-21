@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { WorkerService } from './excell-refactor.service';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +13,12 @@ export class AppComponent {
 
   result: any;
 
-  constructor(private workerService: WorkerService) { }
+  runWorker() {
 
-  async runWorker() {
-    const data = 5;
-    this.result = await this.workerService.runTask(data);
+    const worker = new Worker(new URL('./excell.worker', import.meta.url));
+    worker.onmessage = ({ data }) => {
+      console.log(`page got message: ${data}`);
+    };
+    worker.postMessage('hello');
   }
 }
